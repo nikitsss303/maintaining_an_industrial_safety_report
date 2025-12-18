@@ -1,12 +1,11 @@
 import os
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from dotenv import load_dotenv
+from sqlalchemy import engine_from_config, pool
 
 from alembic import context
 
-from dotenv import load_dotenv
 load_dotenv('.env')
 
 # this is the Alembic Config object, which provides
@@ -14,12 +13,12 @@ load_dotenv('.env')
 config = context.config
 
 section = config.config_ini_section
-config.set_section_option(section, "DB_DRIVE", os.getenv("DB_DRIVE"))
-config.set_section_option(section, "DB_USER", os.getenv("DB_USER"))
-config.set_section_option(section, "DB_PASSWORD", os.getenv("DB_PASSWORD"))
-config.set_section_option(section, "DB_HOST", os.getenv("DB_HOST"))
-config.set_section_option(section, "DB_PORT", os.getenv("DB_PORT"))
-config.set_section_option(section, "DB_NAME", os.getenv("DB_NAME"))
+config.set_section_option(section, "DB_DRIVER", os.getenv("DB_DRIVER", ""))
+config.set_section_option(section, "DB_USER", os.getenv("DB_USER", ""))
+config.set_section_option(section, "DB_PASSWORD", os.getenv("DB_PASSWORD", ""))
+config.set_section_option(section, "DB_HOST", os.getenv("DB_HOST", ""))
+config.set_section_option(section, "DB_PORT", os.getenv("DB_PORT", ""))
+config.set_section_option(section, "DB_NAME", os.getenv("DB_NAME", ""))
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -31,7 +30,7 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 
-from app.config.database import Base 
+from app.config.database import Base
 
 target_metadata = Base.metadata
 
