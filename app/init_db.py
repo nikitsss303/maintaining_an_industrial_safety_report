@@ -1,6 +1,6 @@
 import asyncio
 
-from app.config.database import Base, engine
+from config.database import Base, engine
 
 
 async def init_models():
